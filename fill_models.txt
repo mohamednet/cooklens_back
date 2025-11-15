@@ -1,0 +1,29 @@
+This file lists all models that need to be filled with proper content.
+Due to the large number (26 models), I'll fill them in batches using multi_edit.
+
+Models to fill:
+1. UserProvider
+2. UserDevice
+3. RecipeCategory
+4. Cuisine
+5. Ingredient
+6. RecipeIngredient
+7. Step
+8. Tag
+9. RecipeTag
+10. AiSuggestion
+11. AiSuggestionRecipe
+12. IngredientImage
+13. DetectedIngredient
+14. Favorite
+15. RecipeLike
+16. MealPlan
+17. MealPlanRecipe
+18. Feedback
+19. RecipeShare
+20. RecipeComment
+21. CommentLike
+22. Admin
+23. AnalyticsEvent
+24. Subscription
+25. Notification
