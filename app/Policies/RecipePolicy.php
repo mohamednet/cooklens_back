@@ -26,7 +26,7 @@ class RecipePolicy
         }
 
         // Draft recipes can only be viewed by the owner
-        return $user && $user->id === $recipe->user_id;
+        return $user && $user->id === $recipe->created_by;
     }
 
     /**
@@ -42,7 +42,7 @@ class RecipePolicy
      */
     public function update(User $user, Recipe $recipe): bool
     {
-        return $user->id === $recipe->user_id;
+        return $user->id === $recipe->created_by;
     }
 
     /**
@@ -50,7 +50,7 @@ class RecipePolicy
      */
     public function delete(User $user, Recipe $recipe): bool
     {
-        return $user->id === $recipe->user_id;
+        return $user->id === $recipe->created_by;
     }
 
     /**
@@ -58,6 +58,6 @@ class RecipePolicy
      */
     public function publish(User $user, Recipe $recipe): bool
     {
-        return $user->id === $recipe->user_id && $recipe->status === 'draft';
+        return $user->id === $recipe->created_by && $recipe->status === 'draft';
     }
 }

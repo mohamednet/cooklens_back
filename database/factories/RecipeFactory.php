@@ -26,10 +26,6 @@ class RecipeFactory extends Factory
             'difficulty' => fake()->randomElement(['easy', 'medium', 'hard']),
             'status' => 'draft',
             'calories' => fake()->numberBetween(100, 800),
-            'protein' => fake()->randomFloat(1, 5, 50),
-            'carbs' => fake()->randomFloat(1, 10, 100),
-            'fat' => fake()->randomFloat(1, 5, 50),
-            'fiber' => fake()->randomFloat(1, 1, 20),
         ];
     }
 }

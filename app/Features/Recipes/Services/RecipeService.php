@@ -73,9 +73,9 @@ class RecipeService
     /**
      * Increment views count.
      */
-    public function incrementViews(Recipe $recipe): void
+    public function incrementViews(int $recipeId): void
     {
-        $recipe->increment('views_count');
+        $this->recipeRepository->find($recipeId)->increment('views_count');
     }
 
     /**
