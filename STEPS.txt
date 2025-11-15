@@ -52,17 +52,18 @@ PROJECT SETUP & CONFIGURATION
     [✓] Create app/Enums directory
     [✓] Set up PSR-4 autoloading in composer.json
 
-[ ] 0.5 - Git & Version Control
-    [ ] Initialize git repository
-    [ ] Create .gitignore
-    [ ] Create development branch
-    [ ] Set up GitHub/GitLab repository
-    [ ] Create README.md
+[✓] 0.5 - Git & Version Control
+    [✓] Initialize git repository
+    [✓] Create .gitignore
+    [✓] Create development branch
+    [✓] Set up GitHub repository (https://github.com/mohamednet/cooklens_back.git)
+    [✓] Create README.md
 
-[ ] 0.6 - API Documentation Setup
-    [ ] Install Scribe: composer require --dev knuckleswtf/scribe
-    [ ] Configure Scribe settings
-    [ ] Set up Postman/Insomnia workspace
+[✓] 0.6 - API Documentation Setup
+    [✓] Install Scribe: composer require --dev knuckleswtf/scribe
+    [✓] Configure Scribe settings
+    [✓] Generate initial documentation (http://localhost:8000/docs)
+    [ ] Set up Postman/Insomnia workspace (optional - Postman collection auto-generated)
 
 ================================================================================
                         PHASE 1: DATABASE FOUNDATION
