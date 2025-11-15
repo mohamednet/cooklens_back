@@ -5,6 +5,10 @@ use App\Features\Auth\Controllers\EmailVerificationController;
 use App\Features\Auth\Controllers\PasswordResetController;
 use App\Features\Auth\Controllers\ProfileController;
 use App\Features\Auth\Controllers\TokenController;
+use App\Features\Recipes\Controllers\RecipeController;
+use App\Features\Recipes\Controllers\RecipeIngredientController;
+use App\Features\Recipes\Controllers\RecipeSearchController;
+use App\Features\Recipes\Controllers\RecipeStepController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,4 +55,35 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{tokenId}', [TokenController::class, 'destroy']);
         Route::delete('/', [TokenController::class, 'destroyAll']);
     });
+
+    // My Recipes
+    Route::get('/my-recipes', [RecipeController::class, 'myRecipes']);
+
+    // Recipe Management
+    Route::prefix('recipes')->group(function () {
+        Route::post('/', [RecipeController::class, 'store']);
+        Route::put('/{recipe}', [RecipeController::class, 'update']);
+        Route::delete('/{recipe}', [RecipeController::class, 'destroy']);
+        Route::post('/{recipe}/publish', [RecipeController::class, 'publish']);
+
+        // Recipe Ingredients
+        Route::post('/{recipe}/ingredients', [RecipeIngredientController::class, 'store']);
+        Route::put('/{recipe}/ingredients/{ingredientId}', [RecipeIngredientController::class, 'update']);
+        Route::delete('/{recipe}/ingredients/{ingredientId}', [RecipeIngredientController::class, 'destroy']);
+        Route::post('/{recipe}/ingredients/sync', [RecipeIngredientController::class, 'sync']);
+
+        // Recipe Steps
+        Route::post('/{recipe}/steps', [RecipeStepController::class, 'store']);
+        Route::put('/{recipe}/steps/{step}', [RecipeStepController::class, 'update']);
+        Route::delete('/{recipe}/steps/{step}', [RecipeStepController::class, 'destroy']);
+        Route::post('/{recipe}/steps/reorder', [RecipeStepController::class, 'reorder']);
+    });
+});
+
+// Public Recipe Routes
+Route::prefix('recipes')->group(function () {
+    Route::get('/', [RecipeController::class, 'index']);
+    Route::get('/search', [RecipeSearchController::class, 'search']);
+    Route::post('/search/ingredients', [RecipeSearchController::class, 'searchByIngredients']);
+    Route::get('/{slug}', [RecipeController::class, 'show']);
 });
