@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\Subscriptions\Services;
 
 use App\Models\Subscription;
 use App\Repositories\Contracts\SubscriptionRepositoryInterface;

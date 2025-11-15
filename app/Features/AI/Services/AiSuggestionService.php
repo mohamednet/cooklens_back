@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\AI\Services;
 
 use App\Models\AiSuggestion;
 use App\Models\AiSuggestionRecipe;

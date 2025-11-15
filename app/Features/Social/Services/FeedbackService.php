@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\Social\Services;
 
 use App\Models\Feedback;
 use App\Models\Recipe;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\MealPlans\Services;
 
 use App\Models\MealPlan;
 use App\Models\MealPlanRecipe;

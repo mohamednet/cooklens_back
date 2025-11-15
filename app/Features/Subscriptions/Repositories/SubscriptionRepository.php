@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Features\Subscriptions\Repositories;
 
 use App\Models\Subscription;
 use App\Repositories\Contracts\SubscriptionRepositoryInterface;
+use App\Repositories\Eloquent\BaseRepository;
 
 class SubscriptionRepository extends BaseRepository implements SubscriptionRepositoryInterface
 {

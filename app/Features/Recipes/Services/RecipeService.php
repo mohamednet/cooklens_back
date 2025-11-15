@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\Recipes\Services;
 
 use App\Models\Recipe;
 use App\Repositories\Contracts\RecipeRepositoryInterface;

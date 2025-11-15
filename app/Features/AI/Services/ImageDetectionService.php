@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\AI\Services;
 
 use App\Models\DetectedIngredient;
 use App\Models\IngredientImage;

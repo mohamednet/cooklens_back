@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Features\Social\Services;
 
 use App\Models\Favorite;
 use App\Repositories\Contracts\FavoriteRepositoryInterface;
+use App\Repositories\Eloquent\BaseRepository;
 
 class FavoriteRepository extends BaseRepository implements FavoriteRepositoryInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\Recipes\Services;
 
 use App\Repositories\Contracts\RecipeRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

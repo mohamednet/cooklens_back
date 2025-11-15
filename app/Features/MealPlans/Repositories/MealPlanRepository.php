@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Features\MealPlans\Repositories;
 
 use App\Models\MealPlan;
 use App\Repositories\Contracts\MealPlanRepositoryInterface;
+use App\Repositories\Eloquent\BaseRepository;
 
 class MealPlanRepository extends BaseRepository implements MealPlanRepositoryInterface
 {

@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Features\Auth\Repositories\UserRepository;
+use App\Features\MealPlans\Repositories\MealPlanRepository;
+use App\Features\Recipes\Repositories\IngredientRepository;
+use App\Features\Recipes\Repositories\RecipeRepository;
+use App\Features\Social\Services\CommentRepository;
+use App\Features\Social\Services\FavoriteRepository;
+use App\Features\Subscriptions\Repositories\SubscriptionRepository;
 use App\Repositories\Contracts\CommentRepositoryInterface;
 use App\Repositories\Contracts\FavoriteRepositoryInterface;
 use App\Repositories\Contracts\IngredientRepositoryInterface;
@@ -9,13 +16,6 @@ use App\Repositories\Contracts\MealPlanRepositoryInterface;
 use App\Repositories\Contracts\RecipeRepositoryInterface;
 use App\Repositories\Contracts\SubscriptionRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Repositories\Eloquent\CommentRepository;
-use App\Repositories\Eloquent\FavoriteRepository;
-use App\Repositories\Eloquent\IngredientRepository;
-use App\Repositories\Eloquent\MealPlanRepository;
-use App\Repositories\Eloquent\RecipeRepository;
-use App\Repositories\Eloquent\SubscriptionRepository;
-use App\Repositories\Eloquent\UserRepository;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
