@@ -339,7 +339,7 @@ RECIPE CRUD
 [✓] 4.1 - Recipe Creation
     [✓] StoreRecipeRequest validation - TESTED
     [✓] RecipeController@store - TESTED
-    [ ] Upload image/video - NOT TESTED
+    [✓] Upload image/video - IMPLEMENTED & WORKING
     [✓] Generate slug - TESTED
     [✓] Set status to draft - TESTED
     [✓] Test: Create recipe - PASSED
@@ -387,13 +387,13 @@ RECIPE CRUD
 [✓] 4.8 - Recipe Deletion
     [✓] Check authorization - TESTED
     [✓] Soft delete - TESTED
-    [ ] Cascade delete related data - NOT IMPLEMENTED
+    [✓] Cascade delete related data - IMPLEMENTED
     [✓] Test: Delete recipe - PASSED
 
 [✓] 4.9 - Recipe Publishing
     [✓] Change status to published - TESTED
     [✓] Set published_at - TESTED
-    [ ] Validate completeness - NOT IMPLEMENTED
+    [✓] Validate completeness - IMPLEMENTED
     [✓] Test: Publish recipe - PASSED
 
 [✓] 4.10 - My Recipes
@@ -416,7 +416,7 @@ SEARCH & FILTERS
     [✓] Filter by difficulty - TESTED
     [✓] Filter by duration - Code exists
     [✓] Filter by tags - Code exists
-    [ ] Filter by dietary preferences - NOT IMPLEMENTED
+    [✓] Filter by dietary preferences - IMPLEMENTED
     [✓] Test: All filters - PASSED (difficulty tested)
 
 [✓] 4.13 - Sorting Options
@@ -469,12 +469,12 @@ CATEGORIES & CUISINES
 [✓] 4.19 - Recipe Resources
     [✓] RecipeResource - CREATED & TESTED
     [✓] RecipeListResource - CREATED & TESTED
-    [ ] RecipeIngredientResource - NOT CREATED
-    [ ] StepResource - NOT CREATED
-    [ ] CategoryResource - NOT CREATED
-    [ ] CuisineResource - NOT CREATED
-    [ ] IngredientResource - NOT CREATED
-    [ ] TagResource - NOT CREATED
+    [✓] RecipeIngredientResource - CREATED
+    [✓] StepResource - CREATED
+    [✓] CategoryResource - CREATED
+    [✓] CuisineResource - CREATED
+    [✓] IngredientResource - CREATED
+    [✓] TagResource - CREATED
 
 ================================================================================
                     PHASE 5: SOCIAL FEATURES & ENGAGEMENT
