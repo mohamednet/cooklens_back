@@ -79,9 +79,12 @@ class RecipeController extends Controller
             'tags'
         ])->where('slug', $slug)->firstOrFail();
 
-        // Check authorization for draft recipes
-        if ($recipe->status === 'draft' && (!$request->user() || $request->user()->id !== $recipe->user_id)) {
-            return $this->forbiddenResponse('This recipe is not published yet');
+        // Check authorization for draft recipes using policy
+        if ($recipe->status === 'draft') {
+            $user = $request->user();
+            if (!$user || !$user->can('view', $recipe)) {
+                return $this->forbiddenResponse('This recipe is not published yet');
+            }
         }
 
         // Increment views
