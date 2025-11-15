@@ -13,7 +13,9 @@ class RecipeStepController extends Controller
 {
     use ApiResponse;
 
-    public function __construct() {}
+    public function __construct(
+        protected \App\Services\FileUploadService $fileUploadService
+    ) {}
 
     /**
      * Add step to recipe.
@@ -33,9 +35,14 @@ class RecipeStepController extends Controller
             'video_url' => ['nullable', 'url'],
         ]);
 
-        // Handle image upload (TODO: implement file upload)
+        // Handle image upload
         if ($request->hasFile('image')) {
-            // $validated['image_url'] = Storage::put('recipes/steps', $request->file('image'));
+            $urls = $this->fileUploadService->uploadImage(
+                $request->file('image'),
+                'recipes/steps',
+                ['thumbnail' => ['width' => 400, 'height' => 300]]
+            );
+            $validated['image_url'] = $urls['original'];
             unset($validated['image']);
         }
 
@@ -71,13 +78,19 @@ class RecipeStepController extends Controller
             'video_url' => ['nullable', 'url'],
         ]);
 
-        // Handle image upload (TODO: implement file upload)
+        // Handle image upload
         if ($request->hasFile('image')) {
             // Delete old image
-            // if ($step->image_url) {
-            //     Storage::delete($step->image_url);
-            // }
-            // $validated['image_url'] = Storage::put('recipes/steps', $request->file('image'));
+            if ($step->image_url) {
+                $this->fileUploadService->delete($step->image_url);
+            }
+            
+            $urls = $this->fileUploadService->uploadImage(
+                $request->file('image'),
+                'recipes/steps',
+                ['thumbnail' => ['width' => 400, 'height' => 300]]
+            );
+            $validated['image_url'] = $urls['original'];
             unset($validated['image']);
         }
 
@@ -104,10 +117,10 @@ class RecipeStepController extends Controller
             return $this->errorResponse('Step does not belong to this recipe', 400);
         }
 
-        // Delete image if exists (TODO: implement file deletion)
-        // if ($step->image_url) {
-        //     Storage::delete($step->image_url);
-        // }
+        // Delete image if exists
+        if ($step->image_url) {
+            $this->fileUploadService->delete($step->image_url);
+        }
 
         $step->delete();
 

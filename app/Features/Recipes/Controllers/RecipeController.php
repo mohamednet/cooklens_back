@@ -18,7 +18,8 @@ class RecipeController extends Controller
     use ApiResponse;
 
     public function __construct(
-        protected RecipeService $recipeService
+        protected RecipeService $recipeService,
+        protected \App\Services\FileUploadService $fileUploadService
     ) {}
 
     /**
@@ -56,6 +57,29 @@ class RecipeController extends Controller
     {
         $data = $request->validated();
         $data['created_by'] = $request->user()->id;
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $urls = $this->fileUploadService->uploadImage(
+                $request->file('image'),
+                'recipes/images',
+                [
+                    'thumbnail' => ['width' => 300, 'height' => 300],
+                    'medium' => ['width' => 600, 'height' => 400],
+                    'large' => ['width' => 1200, 'height' => 800],
+                ]
+            );
+            $data['image_url'] = $urls['original'];
+            $data['thumbnail_url'] = $urls['thumbnail'];
+        }
+
+        // Handle video upload
+        if ($request->hasFile('video')) {
+            $data['video_url'] = $this->fileUploadService->uploadVideo(
+                $request->file('video'),
+                'recipes/videos'
+            );
+        }
 
         $recipe = $this->recipeService->create($data);
 
@@ -122,6 +146,25 @@ class RecipeController extends Controller
             return $this->forbiddenResponse('You are not authorized to delete this recipe');
         }
 
+        // Delete recipe images
+        if ($recipe->image_url) {
+            $this->fileUploadService->delete($recipe->image_url);
+        }
+        if ($recipe->thumbnail_url) {
+            $this->fileUploadService->delete($recipe->thumbnail_url);
+        }
+        if ($recipe->video_url) {
+            $this->fileUploadService->delete($recipe->video_url);
+        }
+
+        // Delete step images
+        foreach ($recipe->steps as $step) {
+            if ($step->image_url) {
+                $this->fileUploadService->delete($step->image_url);
+            }
+        }
+
+        // Soft delete recipe (cascade handled by database)
         $this->recipeService->delete($recipe->id);
 
         return $this->successResponse(null, 'Recipe deleted successfully');
@@ -135,6 +178,25 @@ class RecipeController extends Controller
         // Check authorization
         if ($request->user()->cannot('publish', $recipe)) {
             return $this->forbiddenResponse('You are not authorized to publish this recipe');
+        }
+
+        // Validate recipe completeness
+        $errors = [];
+        
+        if (!$recipe->image_url) {
+            $errors[] = 'Recipe must have a cover image';
+        }
+        
+        if ($recipe->ingredients()->count() === 0) {
+            $errors[] = 'Recipe must have at least one ingredient';
+        }
+        
+        if ($recipe->steps()->count() === 0) {
+            $errors[] = 'Recipe must have at least one cooking step';
+        }
+
+        if (!empty($errors)) {
+            return $this->errorResponse('Recipe is incomplete: ' . implode(', ', $errors), 422);
         }
 
         $this->recipeService->publish($recipe->id);

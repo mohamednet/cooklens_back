@@ -27,6 +27,8 @@ class StoreRecipeRequest extends FormRequest
             'carbs' => ['nullable', 'numeric', 'min:0'],
             'fat' => ['nullable', 'numeric', 'min:0'],
             'fiber' => ['nullable', 'numeric', 'min:0'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'video' => ['nullable', 'mimes:mp4,mov,avi,mpeg', 'max:102400'],
             'image' => ['nullable', 'image', 'max:5120'], // 5MB
             'video_url' => ['nullable', 'url'],
         ];

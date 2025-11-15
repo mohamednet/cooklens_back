@@ -27,16 +27,26 @@ class RecipeSearchController extends Controller
             'category_id' => ['nullable', 'exists:recipe_categories,id'],
             'cuisine_id' => ['nullable', 'exists:cuisines,id'],
             'difficulty' => ['nullable', 'in:easy,medium,hard'],
-            'prep_time_max' => ['nullable', 'integer', 'min:0'],
-            'cook_time_max' => ['nullable', 'integer', 'min:0'],
+            'max_prep_time' => ['nullable', 'integer', 'min:0'],
+            'max_cook_time' => ['nullable', 'integer', 'min:0'],
             'tags' => ['nullable', 'array'],
             'tags.*' => ['exists:tags,id'],
+            'dietary' => ['nullable', 'array'],
+            'dietary.*' => ['in:vegan,vegetarian,gluten-free,dairy-free'],
             'sort' => ['nullable', 'in:latest,popular,liked,rated,favorited'],
             'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
         ]);
 
         $perPage = $validated['per_page'] ?? 15;
         $recipes = $this->searchService->search($validated, $perPage);
+
+        // Filter by dietary preferences
+        if (!empty($validated['dietary'])) {
+            $recipes = $recipes->whereHas('tags', function($q) use ($validated) {
+                $q->where('type', 'dietary')
+                  ->whereIn('slug', $validated['dietary']);
+            });
+        }
 
         return $this->successResponse(
             RecipeListResource::collection($recipes)->response()->getData(true)
