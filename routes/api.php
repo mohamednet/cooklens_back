@@ -9,6 +9,12 @@ use App\Features\Recipes\Controllers\RecipeController;
 use App\Features\Recipes\Controllers\RecipeIngredientController;
 use App\Features\Recipes\Controllers\RecipeSearchController;
 use App\Features\Recipes\Controllers\RecipeStepController;
+use App\Features\Recipes\Controllers\RecipeTagController;
+use App\Features\Recipes\Controllers\CategoryController;
+use App\Features\Recipes\Controllers\CuisineController;
+use App\Features\Recipes\Controllers\IngredientController;
+use App\Features\Recipes\Controllers\TagController;
+use App\Features\Recipes\Controllers\RecommendationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,7 +83,36 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{recipe}/steps/{step}', [RecipeStepController::class, 'update']);
         Route::delete('/{recipe}/steps/{step}', [RecipeStepController::class, 'destroy']);
         Route::post('/{recipe}/steps/reorder', [RecipeStepController::class, 'reorder']);
+
+        // Recipe Tags
+        Route::post('/{recipe}/tags/attach', [RecipeTagController::class, 'attach']);
+        Route::post('/{recipe}/tags/detach', [RecipeTagController::class, 'detach']);
+        Route::post('/{recipe}/tags/sync', [RecipeTagController::class, 'sync']);
     });
+
+    // Personalized recommendations (requires auth)
+    Route::get('/recommendations', [RecommendationController::class, 'index']);
+
+    // Admin: Categories management
+    Route::post('/admin/categories', [CategoryController::class, 'store']);
+    Route::put('/admin/categories/{category}', [CategoryController::class, 'update']);
+    Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy']);
+
+    // Admin: Cuisines management
+    Route::post('/admin/cuisines', [CuisineController::class, 'store']);
+    Route::put('/admin/cuisines/{cuisine}', [CuisineController::class, 'update']);
+    Route::delete('/admin/cuisines/{cuisine}', [CuisineController::class, 'destroy']);
+
+    // Admin: Ingredients management
+    Route::post('/admin/ingredients', [IngredientController::class, 'store']);
+    Route::put('/admin/ingredients/{ingredient}', [IngredientController::class, 'update']);
+    Route::delete('/admin/ingredients/{ingredient}', [IngredientController::class, 'destroy']);
+    Route::post('/admin/ingredients/bulk-import', [IngredientController::class, 'bulkImport']);
+
+    // Admin: Tags management
+    Route::post('/admin/tags', [TagController::class, 'store']);
+    Route::put('/admin/tags/{tag}', [TagController::class, 'update']);
+    Route::delete('/admin/tags/{tag}', [TagController::class, 'destroy']);
 });
 
 // Public Recipe Routes
@@ -86,4 +121,25 @@ Route::prefix('recipes')->group(function () {
     Route::get('/search', [RecipeSearchController::class, 'search']);
     Route::post('/search/ingredients', [RecipeSearchController::class, 'searchByIngredients']);
     Route::get('/{slug}', [RecipeController::class, 'show']);
+
+    // Categories (public)
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/categories/{slug}', [CategoryController::class, 'show']);
+
+    // Cuisines (public)
+    Route::get('/cuisines', [CuisineController::class, 'index']);
+    Route::get('/cuisines/{slug}', [CuisineController::class, 'show']);
+
+    // Ingredients (public)
+    Route::get('/ingredients', [IngredientController::class, 'index']);
+    Route::get('/ingredients/{ingredient}', [IngredientController::class, 'show']);
+
+    // Tags (public)
+    Route::get('/tags', [TagController::class, 'index']);
+    Route::get('/tags/{slug}', [TagController::class, 'show']);
+
+    // Recommendations (public)
+    Route::get('/recommendations/trending', [RecommendationController::class, 'trending']);
+    Route::get('/recommendations/similar/{recipe}', [RecommendationController::class, 'similar']);
+    Route::get('/recommendations/by-creator/{recipe}', [RecommendationController::class, 'byCreator']);
 });
