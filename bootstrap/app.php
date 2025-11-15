@@ -8,6 +8,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
         RepositoryServiceProvider::class,
+        \App\Providers\AuthServiceProvider::class,
     ])
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -18,6 +19,13 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->api(prepend: [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        ]);
+
+        // Register custom middleware aliases
+        $middleware->alias([
+            'verified' => \App\Http\Middleware\EnsureEmailVerified::class,
+            'subscription' => \App\Http\Middleware\CheckSubscription::class,
+            'admin' => \App\Http\Middleware\AdminOnly::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
