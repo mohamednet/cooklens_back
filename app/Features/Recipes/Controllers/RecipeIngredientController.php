@@ -34,7 +34,13 @@ class RecipeIngredientController extends Controller
             'notes' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $this->ingredientService->addIngredient($recipe->id, $validated);
+        $this->ingredientService->addIngredient(
+            $recipe->id,
+            $validated['ingredient_id'],
+            $validated['quantity'],
+            $validated['unit'],
+            $validated['notes'] ?? null
+        );
 
         return $this->successResponse(
             $recipe->fresh('ingredients')->ingredients,

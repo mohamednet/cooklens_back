@@ -10,13 +10,14 @@ class RecipeIngredientService
     /**
      * Add ingredient to recipe.
      */
-    public function addIngredient(int $recipeId, int $ingredientId, float $quantity, string $unit): RecipeIngredient
+    public function addIngredient(int $recipeId, int $ingredientId, float $quantity, string $unit, ?string $notes = null): RecipeIngredient
     {
         return RecipeIngredient::create([
             'recipe_id' => $recipeId,
             'ingredient_id' => $ingredientId,
             'quantity' => $quantity,
             'unit' => $unit,
+            'notes' => $notes,
         ]);
     }
 
